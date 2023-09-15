@@ -17,7 +17,8 @@ let project = Project(
             sources: ["Sources/**"],
             resources: ["Resources/**"],
             dependencies: [
-                .Module.BaseModule
+                .Module.BaseModule,
+                .project(target: "PlanItDS", path: "../PlanItDS")
             ] + TargetDependency.appDependencies
         )]
 )

@@ -1,7 +1,7 @@
 import ProjectDescription
 
 extension Project {
-    public static func DynamicFramework(
+    public static func dynamicFramework(
         name: String,
         platform: Platform,
         infoPlist: InfoPlist = .default,

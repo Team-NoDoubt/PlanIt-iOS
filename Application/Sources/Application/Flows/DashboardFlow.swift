@@ -34,26 +34,23 @@ class DashboardFlow: Flow {
             when: .created
         ) { [unowned self] root1, root2, root3 in
             let tabBarItem1 = UITabBarItem(
-                title: "Wishlist",
-                image: UIImage(named: "wishlist"),
+                title: "시간표",
+                image: UIImage(systemName: "calendar"),
                 selectedImage: nil
             )
             let tabBarItem2 = UITabBarItem(
-                title: "Watched",
-                image: UIImage(named: "watched"),
+                title: "교체내역",
+                image: UIImage(systemName: "arrow.left.arrow.right"),
                 selectedImage: nil
             )
             let tabBarItem3 = UITabBarItem(
-                title: "Trending",
-                image: UIImage(named: "trending"),
+                title: "더보기",
+                image: UIImage(systemName: "line.3.horizontal"),
                 selectedImage: nil
             )
             root1.tabBarItem = tabBarItem1
-            root1.title = "Wishlist"
             root2.tabBarItem = tabBarItem2
-            root2.title = "Watched"
             root3.tabBarItem = tabBarItem3
-            root3.title = "Trending"
 
             self.rootViewController.setViewControllers([root1, root2, root3], animated: false)
 //            self?.rootViewController.selectedIndex = 1
@@ -68,7 +65,7 @@ class DashboardFlow: Flow {
                 withNextStepper: OneStepper(withSingleStep: AppStep.changedSceneIsRequired)),
             .contribute(
                 withNextPresentable: etcFlow,
-                withNextStepper: OneStepper(withSingleStep: AppStep.etcListAreRequired)
+                withNextStepper: OneStepper(withSingleStep: AppStep.etcScreenRequired)
             )
         
         ])

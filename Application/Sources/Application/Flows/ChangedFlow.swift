@@ -22,10 +22,23 @@ class ChangedFlow: Flow {
         guard let step = step as? AppStep else { return .none }
 
         switch step {
+        case .changedSceneIsRequired:
+            return navigateToChangedScreen()
         default:
             return .none
         }
     }
 
+    private func navigateToChangedScreen() -> FlowContributors {
+        let changedViewController = ChangedViewController()
+        
+        self.rootViewController.setViewControllers([changedViewController], animated: false)
+    
+//        self.rootViewController.pushViewController([changedViewController], animated: false)
 
+    
+        return .one(flowContributor: .contribute(
+            withNextPresentable: changedViewController,
+            withNextStepper: OneStepper(withSingleStep: AppStep.changedSceneIsRequired)))
+    }
 }

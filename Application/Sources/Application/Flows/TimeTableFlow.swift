@@ -26,6 +26,8 @@ class TimeTableFlow: Flow {
         let timeTableViewController = TimeTableViewController()
         self.rootViewController.setViewControllers([timeTableViewController], animated: false)
 
+//        self.rootViewController.pushViewController([timeTableViewController], animated: false)
+
         return .one(flowContributor: .contribute(
             withNextPresentable: timeTableViewController,
             withNextStepper: OneStepper(withSingleStep: AppStep.timeTableIsRequired)))

@@ -8,7 +8,7 @@ class AppStepper: Stepper {
     private let disposeBag = DisposeBag()
 
     var initialStep: Step {
-        return AppStep.dashboardIsRequired
+        return AppStep.loginIsRequired
     }
 
     func readyToEmitSteps() {

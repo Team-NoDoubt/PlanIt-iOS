@@ -22,9 +22,18 @@ class ETCFlow: Flow {
         guard let step = step as? AppStep else { return .none }
 
         switch step {
+        case .etcScreenRequired:
+            return navigateToEtcScreen()
         default:
             return .none
         }
+    }
+
+    private func navigateToEtcScreen() -> FlowContributors {
+        let etcViewController = EtcViewController()
+        self.rootViewController.setViewControllers([etcViewController], animated: false)
+
+        return .one(flowContributor: .contribute(withNextPresentable: etcViewController, withNextStepper: OneStepper(withSingleStep: AppStep.etcScreenRequired)))
     }
 }
 

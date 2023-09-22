@@ -15,6 +15,6 @@ enum AppStep: Step {
     case changedSceneIsRequired
 
     //ETC
-    case etcListAreRequired
+    case etcScreenRequired
 
 }

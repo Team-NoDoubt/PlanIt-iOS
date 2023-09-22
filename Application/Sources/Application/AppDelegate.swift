@@ -1,7 +1,13 @@
 import UIKit
+import RxFlow
+import RxSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    var window: UIWindow?
+    var coordinator = FlowCoordinator()
+    let disposeBag = DisposeBag()
 
     func application(
         _ application: UIApplication,

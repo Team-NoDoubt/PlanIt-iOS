@@ -21,6 +21,8 @@ class AppFlow: Flow {
         switch step {
         case .dashboardIsRequired:
             return self.navigationToDashboardScreen()
+        case .loginIsRequired:
+            return self.navigateToLoginScreen()
         default:
             return .none
         }
@@ -38,6 +40,14 @@ class AppFlow: Flow {
                                                     withNextPresentable: dashboardFlow,
                                                     withNextStepper: OneStepper(withSingleStep: AppStep.dashboardIsRequired)
         ))
-        
+    }
+
+    private func navigateToLoginScreen() -> FlowContributors {
+        let loginFlow = LoginFlow()
+        Flows.use(loginFlow, when: .created) { [unowned self] root in
+            
+            self.rootViewController.pushViewController(root, animated: false)
+        }
+        return .one(flowContributor: .contribute(withNextPresentable: loginFlow, withNextStepper: OneStepper(withSingleStep: AppStep.loginIsRequired)))
     }
 }

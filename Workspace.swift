@@ -5,7 +5,8 @@ let workspace = Workspace(
     projects: [
                 "Application",
                 "DesignSystem",
-                "Modules"
+                "Modules/**",
+                "Services/**"
               ],
     fileHeaderTemplate: nil,
     additionalFiles: []

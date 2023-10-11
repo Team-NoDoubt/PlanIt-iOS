@@ -3,7 +3,7 @@ import RxFlow
 enum AppStep: Step {
     //Global
     case onboardingIsRequired
-    case dashboardIsRequired
+    case tabIsRequired
 
     //Auth
     case loginIsRequired

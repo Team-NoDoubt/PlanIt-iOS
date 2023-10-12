@@ -19,7 +19,7 @@ class AppFlow: Flow {
         guard let step = step as? AppStep else { return .none }
         
         switch step {
-        case .dashboardIsRequired:
+        case .tabIsRequired:
             return self.navigationToDashboardScreen()
         case .loginIsRequired:
             return self.navigateToLoginScreen()
@@ -38,7 +38,7 @@ class AppFlow: Flow {
         }
         return .one(flowContributor: .contribute(
                                                     withNextPresentable: dashboardFlow,
-                                                    withNextStepper: OneStepper(withSingleStep: AppStep.dashboardIsRequired)
+                                                    withNextStepper: OneStepper(withSingleStep: AppStep.tabIsRequired)
         ))
     }
 

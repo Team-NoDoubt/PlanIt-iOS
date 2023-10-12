@@ -14,7 +14,7 @@ class DashboardFlow: Flow {
         guard let step = step as? AppStep else { return .none }
 
         switch step {
-        case .dashboardIsRequired:
+        case .tabIsRequired:
             return navigateToDashboard()
         default:
             return .none

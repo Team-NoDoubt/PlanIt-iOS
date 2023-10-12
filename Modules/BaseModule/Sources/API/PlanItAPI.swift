@@ -1,15 +1,17 @@
 import Foundation
 import Moya
 
-protocol PlanItAPI: TargetType {
+public protocol PlanItAPI: TargetType {
     var domain: String { get }
     var urlPath: String { get }
     var erroerMapper: [Int: Error]? { get }
 }
 
-extension PlanItAPI {
+public extension PlanItAPI {
 
-    var baseURL: URL { URL(string: "http://43.201.53.240:8000")! }
+    var baseURL: URL {
+       return URL(string: "http://3.36.166.250:8080")!
+    }
 
     var path: String {
         return domain + urlPath

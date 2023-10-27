@@ -1,6 +1,11 @@
 import UIKit
+import RxCocoa
+import RxSwift
 
 public class PlanItTextField: UITextField {
+
+    private let disposeBag =  DisposeBag()
+
     override public init(frame: CGRect) {
         super.init(frame: frame)
         self.layer.borderWidth = 1
@@ -11,6 +16,7 @@ public class PlanItTextField: UITextField {
         self.leftViewMode = .always
         self.textColor = .gray800
         self.setPlaceholderTextColor(color: .gray300!)
+        self.changeBorderColor()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -23,5 +29,13 @@ extension PlanItTextField {
             return
         }
         attributedPlaceholder = NSAttributedString(string: string, attributes: [.foregroundColor: color])
+    }
+    private func changeBorderColor() {
+        self.rx.text.orEmpty
+            .map { $0.isEmpty ? UIColor.gray300?.cgColor : UIColor.main.cgColor }
+                .subscribe(onNext: { [weak self] color in
+                self?.layer.borderColor = color
+                })
+                .disposed(by: disposeBag)
     }
 }

@@ -19,8 +19,8 @@ class AppFlow: Flow {
         guard let step = step as? AppStep else { return .none }
         
         switch step {
-        case .dashboardIsRequired:
-            return self.navigationToDashboardScreen()
+        case .tabIsRequired:
+            return self.navigationToTabScreen()
         case .loginIsRequired:
             return self.navigateToLoginScreen()
         default:
@@ -28,26 +28,34 @@ class AppFlow: Flow {
         }
     }
     
-    private func navigationToDashboardScreen() -> FlowContributors {
+    private func navigationToTabScreen() -> FlowContributors {
         let dashboardFlow = DashboardFlow()
         
         Flows.use(dashboardFlow, when: .created) { [unowned self] root in
-            self.rootViewController.pushViewController(root, animated: false)
-//            self?.rootViewController.present(root, animated: true)
+//            self.rootViewController.pushViewController(root, animated: false)
+////            self?.rootViewController.present(root, animated: true)
+            if let rootViewController = (root as? UINavigationController)?.viewControllers.first {
+                self.rootViewController.pushViewController(rootViewController, animated: false)
+            }
             
         }
         return .one(flowContributor: .contribute(
-                                                    withNextPresentable: dashboardFlow,
-                                                    withNextStepper: OneStepper(withSingleStep: AppStep.dashboardIsRequired)
+                withNextPresentable: dashboardFlow,
+                withNextStepper: OneStepper(withSingleStep: AppStep.tabIsRequired)
         ))
     }
 
     private func navigateToLoginScreen() -> FlowContributors {
         let loginFlow = LoginFlow()
         Flows.use(loginFlow, when: .created) { [unowned self] root in
-            
-            self.rootViewController.pushViewController(root, animated: false)
+//            self.rootViewController.pushViewController(root, animated: false)
+            if let rootViewController = (root as? UINavigationController)?.viewControllers.first {
+                self.rootViewController.pushViewController(rootViewController, animated: false)
+            }
+
         }
-        return .one(flowContributor: .contribute(withNextPresentable: loginFlow, withNextStepper: OneStepper(withSingleStep: AppStep.loginIsRequired)))
+        return .one(flowContributor: .contribute(
+            withNextPresentable: loginFlow,
+            withNextStepper: OneStepper(withSingleStep: AppStep.loginIsRequired)))
     }
 }

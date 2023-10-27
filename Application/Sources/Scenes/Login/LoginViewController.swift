@@ -1,13 +1,29 @@
 import UIKit
+import AuthService
 import Then
 import PlanItDS
 import SnapKit
+import RxSwift
+import RxFlow
 
 class LoginViewController: UIViewController {
+
+    var viewModel: LoginViewModel!
+
+    init(loginUseCase: LoginUseCase) {
+        self.viewModel = LoginViewModel(loginUseCase: loginUseCase)
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .blue
         addView()
         setLayout()
+        bind()
     }
 
     private let logoImageView = UIImageView().then {
@@ -17,8 +33,7 @@ class LoginViewController: UIViewController {
         $0.text = "로그인"
         $0.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
     }
-
-    private let loginTextField = PlanItTextField().then {
+    private let idTextField = PlanItTextField().then {
         $0.placeholder = "아이디"
     }
     private let passwordTextField = PlanItTextField().then {
@@ -27,15 +42,26 @@ class LoginViewController: UIViewController {
     private let loginButton = FillButton(type: .system).then {
         $0.setTitle("로그인", for: .normal)
     }
+
+    private func bind() {
+        
+        let input = LoginViewModel.Input(
+            idText: idTextField.rx.text.orEmpty.asDriver(),
+            passwordText: passwordTextField.rx.text.orEmpty.asDriver(),
+            loginButtonTap: loginButton.rx.tap.asDriver()
+        )
+        _ = viewModel.transform(input)
+    }
 }
 
+// MARK: - Setup Views
 extension LoginViewController {
 
     private func addView() {
         [
             logoImageView,
             loginLabel,
-            loginTextField,
+            idTextField,
             passwordTextField,
             loginButton
         ].forEach { view.addSubview($0)}
@@ -51,13 +77,13 @@ extension LoginViewController {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(24)
         }
-        loginTextField.snp.makeConstraints {
+        idTextField.snp.makeConstraints {
             $0.top.equalTo(loginLabel.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(49)
         }
         passwordTextField.snp.makeConstraints {
-            $0.top.equalTo(loginTextField.snp.bottom).offset(15)
+            $0.top.equalTo(idTextField.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(49)
         }
@@ -67,4 +93,5 @@ extension LoginViewController {
             $0.height.equalTo(50)
         }
     }
+    
 }

@@ -4,5 +4,8 @@ import ProjectDescriptionHelpers
 let project = Project.dynamicFramework(
     name: "BaseModule",
     platform: .iOS,
-    dependencies: []
+    dependencies: [
+        .SPM.Moya,
+        .SPM.RxMoya
+    ]+TargetDependency.universalDependencies
 )

@@ -3,13 +3,10 @@ import UIKit
 
 class LoginFlow: Flow {
 
-    private let rootViewController: LoginViewController
+    private let rootViewController = UINavigationController()
 
     var root: Presentable {
         return rootViewController
-    }
-    init() {
-        rootViewController = LoginViewController()
     }
 
     func navigate(to step: Step) -> FlowContributors {

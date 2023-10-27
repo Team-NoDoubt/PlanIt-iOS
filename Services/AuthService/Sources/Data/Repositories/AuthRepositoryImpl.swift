@@ -33,5 +33,14 @@ class AuthRepositoryImpl: AuthRepository {
                 return Single.error(error)
             }.asCompletable()
     }
-    
+
+    func refreshToken(refreshToken: String) -> Completable {
+//        guard let refreshToken = self.keychainDataSource.fetch(tokenType: TokenType(r)) else {
+//            return Completable.error(AuthServiceError.unauthorized)
+//                .do(onSuccess: { [weak self] token in
+//                    self?.keychainDataSource.save(tokenType: TokenType(rawValue: token.accessToken)!, value: token.accessToken)
+//                })
+//        }
+        return Completable.error(Error.self as! Error)
+    }
 }

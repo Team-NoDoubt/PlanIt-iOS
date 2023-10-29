@@ -2,7 +2,7 @@ import Foundation
 import RxFlow
 import UIKit
 
-class DashboardFlow: Flow {
+class TabsFlow: Flow {
 
     private let rootViewController = UITabBarController()
 

@@ -5,16 +5,16 @@ import RxSwift
 
 class AppFlow: Flow {
 
+    private var window: UIWindow
+
     var root: Presentable {
-        return self.rootViewController
+        return self.window
     }
-    
-    private lazy var rootViewController: UINavigationController = {
-        let viewController = UINavigationController()
-        viewController.setNavigationBarHidden(true, animated: false)
-        return viewController
-    }()
-    
+
+    public init(window: UIWindow) {
+        self.window = window
+    }
+
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? AppStep else { return .none }
         
@@ -29,18 +29,13 @@ class AppFlow: Flow {
     }
     
     private func navigationToTabScreen() -> FlowContributors {
-        let dashboardFlow = DashboardFlow()
+        let tabsFlow = TabsFlow()
         
-        Flows.use(dashboardFlow, when: .created) { [unowned self] root in
-//            self.rootViewController.pushViewController(root, animated: false)
-////            self?.rootViewController.present(root, animated: true)
-            if let rootViewController = (root as? UINavigationController)?.viewControllers.first {
-                self.rootViewController.pushViewController(rootViewController, animated: false)
-            }
-            
+        Flows.use(tabsFlow, when: .created) { [unowned self] root in
+            self.window.rootViewController = root
         }
         return .one(flowContributor: .contribute(
-                withNextPresentable: dashboardFlow,
+                withNextPresentable: tabsFlow,
                 withNextStepper: OneStepper(withSingleStep: AppStep.tabIsRequired)
         ))
     }
@@ -48,11 +43,7 @@ class AppFlow: Flow {
     private func navigateToLoginScreen() -> FlowContributors {
         let loginFlow = LoginFlow()
         Flows.use(loginFlow, when: .created) { [unowned self] root in
-//            self.rootViewController.pushViewController(root, animated: false)
-            if let rootViewController = (root as? UINavigationController)?.viewControllers.first {
-                self.rootViewController.pushViewController(rootViewController, animated: false)
-            }
-
+            self.window.rootViewController = root
         }
         return .one(flowContributor: .contribute(
             withNextPresentable: loginFlow,

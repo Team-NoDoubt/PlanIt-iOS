@@ -3,11 +3,15 @@ import UIKit
 
 class LoginFlow: Flow {
 
-    private let rootViewController = UINavigationController()
+    public init() {}
+
+    private lazy var rootViewController = UINavigationController()
 
     var root: Presentable {
         return rootViewController
     }
+
+    private let container = StepperDI.shared
 
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? AppStep else { return .none }
@@ -20,6 +24,11 @@ class LoginFlow: Flow {
     }
 
     private func navigateToLoginScreen() -> FlowContributors{
-        return .one(flowContributor: .contribute(withNextPresentable: rootViewController, withNextStepper: OneStepper(withSingleStep: AppStep.loginIsRequired)))
+        let viewModel = container.loginViewModel
+        let loginViewController = LoginViewController(viewModel: viewModel)
+        rootViewController.pushViewController(loginViewController, animated: false)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: loginViewController,
+            withNextStepper: viewModel))
     }
 }

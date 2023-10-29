@@ -4,9 +4,9 @@ import RxSwift
 import RxCocoa
 import AuthService
 
-class LoginViewModel: ViewModelType, Stepper {
+public class LoginViewModel: ViewModelType, Stepper {
 
-    var steps = PublishRelay<Step>()
+    public var steps = PublishRelay<Step>()
     var disposeBag: DisposeBag = DisposeBag()
     private let loginUseCase: LoginUseCase
     var output = Output()

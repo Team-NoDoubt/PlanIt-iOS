@@ -6,21 +6,21 @@ import SnapKit
 import RxSwift
 import RxFlow
 
-class LoginViewController: UIViewController {
+public class LoginViewController: UIViewController {
 
-    var viewModel: LoginViewModel!
+    public var viewModel: LoginViewModel
 
-    init(loginUseCase: LoginUseCase) {
-        self.viewModel = LoginViewModel(loginUseCase: loginUseCase)
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    override func viewDidLoad() {
-        view.backgroundColor = .blue
+    
+    public override func viewDidLoad() {
+        view.backgroundColor = .systemBackground
         addView()
         setLayout()
         bind()

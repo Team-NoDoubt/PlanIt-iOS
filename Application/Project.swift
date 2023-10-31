@@ -19,6 +19,7 @@ let project = Project(
             dependencies: [
                 .Module.BaseModule,
                 .Service.AuthService,
+                .Service.TimeTableService,
                 .project(target: "PlanItDS", path: "../PlanItDS")
             ] + TargetDependency.appDependencies
         )]

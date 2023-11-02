@@ -1,92 +1,127 @@
 import UIKit
 import SnapKit
 import Then
+import PlanItDS
+import RxSwift
+import RxCocoa
+import TimeTableService
 
 class TimeTableViewController: UIViewController,ViewController {
-    let days = ["월", "화", "수", "목", "금"]
-    
-    let viewModel = TimeTableViewModel()
 
+    private let getTimeTable = PublishRelay<Void>()
+    private let disposeBag = DisposeBag()
+    
+    var viewModel: TimeTableViewModel?
+
+    init(viewModel: TimeTableViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
+        timeTableCollectionView.delegate = self
         addView()
         setLayout()
-        setDayLabels()
-    
+        bind()
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        getTimeTable.accept(())
+    }
+    
     let timeTableLabel = UILabel().then {
         $0.text = "이번주 시간표"
         $0.font = UIFont.systemFont(ofSize: 20, weight: .medium)
     }
-
+    
     let timeTableView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 10
+        $0.shadowTimeTable()
     }
+    let weekView = WeekView()
+    let collectionViewFlowLayout = UICollectionViewFlowLayout()
+    
+    lazy var timeTableCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
+        $0.register(TimeTableCollectionViewCell.self, forCellWithReuseIdentifier: "TimeTableCollectionViewCell")
+    }
+    
+    private func bind() {
+        let input = TimeTableViewModel.Input(
+            getTimeTableData: getTimeTable.asSignal()
+        )
+        let output = viewModel?.transform(input)
+        output?.timTableList.bind(to: timeTableCollectionView.rx.items(cellIdentifier: "TimeTableCollectionViewCell", cellType: TimeTableCollectionViewCell.self)) { row, item, cell in
+            cell.subject.text = item.subject.makeCompect
+        }.disposed(by: disposeBag)
+    }
+}
 
-    let dayLabels: [UILabel] = ["월", "화", "수", "목", "금"].map { day in
-        let label = UILabel()
-        label.text = day
-        label.textAlignment = .center
-        return label
-    }
-
-    let timeTableCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
-//        $0.dataSource = self
-//        $0.delegate = self
-        $0.register(TimeTableListCell.self, forCellWithReuseIdentifier: "TimeTableListCell")
-    }
+// MARK: Layout
+extension TimeTableViewController {
     func setLayout() {
         timeTableLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(70)
             $0.leading.equalToSuperview().inset(37)
         }
         timeTableView.snp.makeConstraints {
-            $0.top.equalTo(timeTableLabel.snp.bottom).offset(70)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(timeTableLabel.snp.bottom).offset(25)
             $0.width.equalTo(330)
-            $0.height.equalTo(500)
+            $0.centerX.equalToSuperview()
+//            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            $0.height.equalTo(490)
+        }
+        weekView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(timeTableCollectionView.snp.leading)
+            $0.trailing.equalTo(timeTableCollectionView.snp.trailing)
+            $0.width.equalTo(300)
+            $0.height.equalTo(40)
         }
         timeTableCollectionView.snp.makeConstraints {
-            $0.top.equalTo(timeTableView.snp.top).offset(80)
-            $0.leading.equalTo(timeTableView.snp.leading).offset(46)
+            $0.top.equalTo(weekView.snp.bottom)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(420)
+            $0.width.equalTo(300)
         }
     }
     
     func addView() {
-        [timeTableLabel,timeTableView, timeTableCollectionView].forEach { view.addSubview($0) }
+        [timeTableLabel,timeTableView].forEach { view.addSubview($0) }
+        [weekView, timeTableCollectionView].forEach { timeTableView.addSubview($0) }
     }
-    func setDayLabels() {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-
-        for label in dayLabels {
-            stackView.addArrangedSubview(label)
-        }
-        
-         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-         self.view.addSubview(stackView)
-        
-//         NSLayoutConstraint.activate([
-//             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-//             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-//             stackView.heightAnchor.constraint(equalToConstant: 50)
-//         ])
-        stackView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(207)
-            $0.leading.trailing.equalToSuperview().inset(50)
-            $0.height.equalTo(40)
-        }
-    }
-    
 }
 
-extension TimeTableViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension TimeTableViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimeTableCollectionViewCell", for: indexPath)
+        return cell
+    }
+}
 
+extension TimeTableViewController: UICollectionViewDelegateFlowLayout {
+    
+    // MARK: cellSize
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let collectionViewWidth = collectionView.bounds.width
+        let cellItemForRow: CGFloat = 5
+        let minimumSpacing: CGFloat = 0
+
+        let width = (collectionViewWidth - (cellItemForRow - 1) * minimumSpacing) / cellItemForRow
+
+        return CGSize(width: width, height: width)
+    }
+
+    // MARK: minimumSpacing
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
 }

@@ -9,7 +9,7 @@ class AppStepper: Stepper {
     public init() { }
 
 //    var initialStep: Step {
-////        return AppStep.loginIsRequired
+//        return steps.accept(AppStep.loginIsRequired) as! Step
 //    }
 
     public func readyToEmitSteps() {

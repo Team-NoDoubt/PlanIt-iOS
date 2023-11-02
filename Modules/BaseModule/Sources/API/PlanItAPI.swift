@@ -29,3 +29,8 @@ public extension PlanItAPI {
         return nil
     }
 }
+
+// MARK: Domain
+enum PlanitDomain {
+    case timeTable
+}

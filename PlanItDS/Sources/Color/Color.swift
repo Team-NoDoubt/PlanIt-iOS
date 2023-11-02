@@ -10,5 +10,6 @@ public extension UIColor {
     static let gray400 = UIColor(named: "Gray400")
     static let gray350 = UIColor(named: "Gray350")
     static let gray300 = UIColor(named: "Gray300")
+    static let gray200 = UIColor(named: "Gray200")
 
 }

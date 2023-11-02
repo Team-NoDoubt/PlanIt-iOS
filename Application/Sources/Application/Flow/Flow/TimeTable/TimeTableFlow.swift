@@ -2,6 +2,7 @@ import UIKit
 import RxFlow
 import RxSwift
 import RxCocoa
+import TimeTableService
 
 class TimeTableFlow: Flow {
 
@@ -10,6 +11,8 @@ class TimeTableFlow: Flow {
     var root: Presentable {
         return self.rootViewController
     }
+
+    private let container = StepperDI.shared
 
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? AppStep else { return .none }
@@ -23,7 +26,8 @@ class TimeTableFlow: Flow {
     }
 
     private func navigateToTimeTableScreen() -> FlowContributors {
-        let timeTableViewController = TimeTableViewController()
+ 
+        let timeTableViewController = TimeTableViewController(viewModel: container.timeTableviewModel)
         self.rootViewController.setViewControllers([timeTableViewController], animated: false)
 
 //        self.rootViewController.pushViewController([timeTableViewController], animated: false)

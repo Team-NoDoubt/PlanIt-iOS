@@ -1,16 +1,20 @@
 import UIKit
 import SnapKit
 import Then
+import PlanItDS
 
-class TimeTableListCell: UICollectionViewCell {
+class TimeTableCollectionViewCell: UICollectionViewCell {
 
-    private let subject = UILabel().then {
+    var subject = UILabel().then {
         $0.text = ""
+        $0.font = .systemFont(ofSize: 16, weight: .bold)
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setCell()
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.gray200?.cgColor
+        setCell()
     }
 
     required init?(coder: NSCoder) {
@@ -21,8 +25,7 @@ class TimeTableListCell: UICollectionViewCell {
         self.addSubview(subject)
 
         subject.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(11)
-            $0.leading.trailing.equalToSuperview().inset(14)
+            $0.centerX.centerY.equalToSuperview()
         }
     }
 }

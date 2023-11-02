@@ -1,6 +1,6 @@
 import UIKit
-import RxCocoa
 import RxSwift
+import RxCocoa
 
 public class PlanItTextField: UITextField {
 

@@ -4,7 +4,7 @@ import UIKit
 
 class TabsFlow: Flow {
 
-    private let rootViewController = CustomTabBarController()
+    private let rootViewController = UITabBarController()
 
     var root: Presentable {
         return rootViewController

@@ -14,7 +14,7 @@ public enum Subject: String {
     case english1 = "영어1"
     case NONE = ""
 
-    public var makeCompect: String {
+    public var makeReduce: String {
         switch self {
         case .operatingSystem:
             return "운체"

@@ -3,6 +3,7 @@ import BaseModule
 
 enum TimeTableAPI {
     case getTimeTable(grade: Int, classNum: Int)
+    case getChangedTimeTable(grade: Int, classNum: Int)
 }
 
 extension TimeTableAPI: PlanItAPI {
@@ -23,12 +24,17 @@ extension TimeTableAPI: PlanItAPI {
     }
     
     var urlPath: String {
-        return ""
+        switch self {
+        case .getChangedTimeTable:
+            return "/date/changed"
+        case .getTimeTable:
+            return "/date"
+        }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getTimeTable:
+        case .getTimeTable, .getChangedTimeTable:
             return .get
         }
     }
@@ -40,7 +46,12 @@ extension TimeTableAPI: PlanItAPI {
                     "grade" : grade,
                     "class" : classNum
                 ], encoding: URLEncoding.queryString)
+        case .getChangedTimeTable(let grade, let classNum):
+            return .requestParameters(
+                parameters: [
+                    "grade" : grade,
+                    "class" : classNum
+                ], encoding: URLEncoding.queryString)
         }
-
     }
 }

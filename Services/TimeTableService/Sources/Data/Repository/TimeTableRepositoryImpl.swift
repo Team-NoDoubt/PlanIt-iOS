@@ -14,4 +14,8 @@ class TimeTableRepositoryImpl: TimeTableRepository {
         timeTableDataSource.getTimeTable(grade: grade, classNum: classNum)
             .asObservable()
     }
+    func getChangedList(grade: Int, classNum: Int) -> RxSwift.Observable<[ChangedEntity]> {
+        timeTableDataSource.getChangedList(grade: grade, classNum: classNum)
+            .asObservable()
+    }
 }

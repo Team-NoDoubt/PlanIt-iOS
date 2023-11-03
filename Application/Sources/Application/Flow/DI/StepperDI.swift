@@ -7,6 +7,7 @@ public struct StepperDI {
 
     public let loginViewModel: LoginViewModel
     public let timeTableviewModel: TimeTableViewModel
+    public let changedViewModel: ChangedViewModel
 }
 
 extension StepperDI {
@@ -21,10 +22,14 @@ extension StepperDI {
         let timeTableViewModel = TimeTableViewModel(
             timeTableListUseCase: timeTableServiceDependency.getTimeTableListUseCase
         )
+        let changedViewModel = ChangedViewModel(
+            getChangedListUseCase: timeTableServiceDependency.getChangedListUseCase
+        )
 
         return .init(
             loginViewModel: loginViewModel,
-            timeTableviewModel: timeTableViewModel
+            timeTableviewModel: timeTableViewModel,
+            changedViewModel: changedViewModel
         )
     }
 }

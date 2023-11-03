@@ -57,7 +57,7 @@ class TimeTableViewController: UIViewController,ViewController {
         )
         let output = viewModel?.transform(input)
         output?.timTableList.bind(to: timeTableCollectionView.rx.items(cellIdentifier: "TimeTableCollectionViewCell", cellType: TimeTableCollectionViewCell.self)) { row, item, cell in
-            cell.subject.text = item.subject.makeCompect
+            cell.subject.text = "\(item.subject.makeReduce)"
         }.disposed(by: disposeBag)
     }
 }

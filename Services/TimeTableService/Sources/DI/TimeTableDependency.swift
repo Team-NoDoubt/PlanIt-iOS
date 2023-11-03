@@ -5,6 +5,7 @@ public struct TimeTableDependency {
     public static let shared = Self.resolve()
 
     public let getTimeTableListUseCase: GetTimeTableListUseCase
+    public let getChangedListUseCase: GetChangedListUseCase
 }
 
 extension TimeTableDependency {
@@ -17,8 +18,12 @@ extension TimeTableDependency {
         let getTimeTableListUseCase = GetTimeTableListUseCase(
             repository: timeTableRepository
         )
+        let getChangedListUseCase = GetChangedListUseCase(
+            repository: timeTableRepository
+        )
         return .init(
-            getTimeTableListUseCase: getTimeTableListUseCase
+            getTimeTableListUseCase: getTimeTableListUseCase,
+            getChangedListUseCase: getChangedListUseCase
         )
     }
 }

@@ -11,6 +11,8 @@ class ChangedFlow: Flow {
         return self.rootViewController
     }
 
+    private let container = StepperDI.shared
+
     func adapt(step: Step) -> Single<Step> {
         switch step {
         default:
@@ -30,7 +32,7 @@ class ChangedFlow: Flow {
     }
 
     private func navigateToChangedScreen() -> FlowContributors {
-        let changedViewController = ChangedViewController()
+        let changedViewController = ChangedViewController(viewModel: container.changedViewModel)
         
         self.rootViewController.setViewControllers([changedViewController], animated: false)
     

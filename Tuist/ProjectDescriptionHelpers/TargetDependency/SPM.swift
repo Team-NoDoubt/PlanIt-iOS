@@ -17,4 +17,16 @@ extension TargetDependency {
         public static let Kingfisher = TargetDependency.external(name: "Kingfisher")
 
     }
+    
+    public static let universalDependencies: [TargetDependency]  = [
+        .SPM.RxSwift
+    ]
+    //Application에서 사용하는 라이브러리
+    public static let appDependencies: [TargetDependency] = [
+        .SPM.Then,
+        .SPM.RxSwift,
+        .SPM.SnapKit,
+        .SPM.RxFlow,
+        .SPM.Kingfisher,
+    ]
 }

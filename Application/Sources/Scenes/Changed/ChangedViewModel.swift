@@ -27,6 +27,7 @@ public class ChangedViewModel: ViewModelType, Stepper {
             self.getChangedListUseCase.excute(grade: 2, classNum: 1)
         }.subscribe(onNext: {
             changedData.accept($0)
+            print($0)
         }).disposed(by: disposeBag)
 
         return Output(changedList: changedData)

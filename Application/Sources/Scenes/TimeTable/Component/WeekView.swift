@@ -40,6 +40,7 @@ class WeekView: UIView {
             friLabel
         ].forEach { self.addSubview($0) }
     }
+
     func setLayout() {
         monLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(21.38)

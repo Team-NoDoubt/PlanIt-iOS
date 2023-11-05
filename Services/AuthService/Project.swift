@@ -5,7 +5,7 @@ let project = Project.dynamicFramework(
     name: "AuthService",
     platform: .iOS,
     dependencies: [
-        .ThirdPartyLib.thirdParty,
+        .SPM.Moya,
         .Module.BaseModule
     ]
 )

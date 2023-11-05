@@ -5,6 +5,7 @@ let project = Project.dynamicFramework(
     name: "BaseModule",
     platform: .iOS,
     dependencies: [
-        .ThirdPartyLib.thirdParty
-    ]
+        .SPM.Moya,
+        .SPM.RxMoya
+    ]+TargetDependency.universalDependencies
 )

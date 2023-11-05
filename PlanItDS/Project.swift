@@ -4,7 +4,5 @@ import ProjectDescriptionHelpers
 let project = Project.dynamicFramework(
     name: "PlanItDS",
     platform: .iOS,
-    dependencies: [
-        .ThirdPartyLib.thirdParty
-    ]
+    dependencies: [] + TargetDependency.universalDependencies + TargetDependency.appDependencies
 )

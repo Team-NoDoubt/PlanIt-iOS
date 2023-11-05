@@ -26,6 +26,7 @@ public class TimeTableViewModel: ViewModelType, Stepper {
             self.timeTableListUseCase.excute(grade: 2, classNum: 1)
         }.subscribe(onNext: {
             timeTableData.accept($0)
+            print($0)
         }).disposed(by: disposeBag)
         
         return Output(timTableList: timeTableData)

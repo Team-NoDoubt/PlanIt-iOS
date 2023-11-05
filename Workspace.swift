@@ -3,11 +3,10 @@ import ProjectDescription
 let workspace = Workspace(
     name: "PlanIt-Workspace",
     projects: [
-               "ThirdPartyLib/",
                 "Application",
                 "DesignSystem",
                 "Modules/**",
-                "Services/**",
+                "Services/**"
               ],
     fileHeaderTemplate: nil,
     additionalFiles: []

@@ -20,9 +20,8 @@ let project = Project(
                 .Module.BaseModule,
                 .Service.AuthService,
                 .Service.TimeTableService,
-                .ThirdPartyLib.thirdParty,
-                .project(target: "PlanItDS", path: "../PlanItDS"),
-            ]
+                .project(target: "PlanItDS", path: "../PlanItDS")
+            ] + TargetDependency.appDependencies
         )]
 )
 

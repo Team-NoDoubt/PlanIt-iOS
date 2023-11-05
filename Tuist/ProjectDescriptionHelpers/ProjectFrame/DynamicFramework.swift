@@ -21,7 +21,7 @@ extension Project {
                     ),
                     infoPlist: infoPlist,
                     sources: ["Sources/**"],
-                    dependencies: dependencies + TargetDependency.universalDependencies
+                    dependencies: dependencies
                 )
                 
             ]

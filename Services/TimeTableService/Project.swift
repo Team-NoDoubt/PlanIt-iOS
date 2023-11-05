@@ -5,7 +5,7 @@ let project = Project.dynamicFramework(
     name: "TimeTableService",
     platform: .iOS,
     dependencies: [
-        .SPM.Moya,
+        .ThirdPartyLib.thirdParty,
         .Module.BaseModule
-    ] + TargetDependency.universalDependencies
+    ]
 )

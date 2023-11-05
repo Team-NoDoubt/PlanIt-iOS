@@ -99,7 +99,7 @@ extension TimeTableViewController {
 
 extension TimeTableViewController: UICollectionViewDelegate {
     private func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimeTableCollectionViewCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimeTableCollectionViewCell", for: indexPath) as? TimeTableCollectionViewCell else { return UICollectionViewCell()}
         return cell
     }
 }

@@ -75,7 +75,7 @@ extension ChangedViewController {
     }
 }
 extension ChangedViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    private func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChangedTableViewCell", for: indexPath) as? ChangedTableViewCell else { return UITableViewCell()}
         return cell
     }

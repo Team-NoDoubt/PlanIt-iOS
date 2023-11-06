@@ -3,6 +3,7 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import PlanItDS
 
 class ChangedViewController: UIViewController {
 
@@ -33,7 +34,7 @@ class ChangedViewController: UIViewController {
     
     private let headerLabel = UILabel().then {
         $0.text = "교체내역"
-        $0.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        $0.font = UIFont.pretendardFont(size: 20, weight: .medium)
     }
     private let changedTableView = UITableView().then {
         $0.register(ChangedTableViewCell.self, forCellReuseIdentifier: "ChangedTableViewCell")

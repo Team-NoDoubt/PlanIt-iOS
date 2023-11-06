@@ -36,7 +36,7 @@ class TimeTableViewController: UIViewController,ViewController {
     
     let timeTableLabel = UILabel().then {
         $0.text = "이번주 시간표"
-        $0.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        $0.font = .pretendardFont(size: 20, weight: .medium)
     }
     
     let timeTableView = UIView().then {

@@ -21,11 +21,13 @@ class ChangedTableViewCell: UITableViewCell {
     }
     var beforeSubject = UILabel().then {
         $0.text = ""
-        $0.font = .systemFont(ofSize: 12, weight: .medium)
+        $0.font = .pretendardFont(size: 12, weight: .medium)
+        $0.textColor = .black
     }
     var beforePeroid = UILabel().then {
         $0.text = ""
-        $0.font = .systemFont(ofSize: 8, weight: .regular)
+        $0.font = .pretendardFont(size: 8, weight: .regular)
+        $0.textColor = .gray500
     }
     let arrowImageView = UIImageView().then {
         $0.image = UIImage(systemName: "arrow.right")
@@ -33,11 +35,13 @@ class ChangedTableViewCell: UITableViewCell {
     }
     var replaceSubject = UILabel().then {
         $0.text = ""
-        $0.font = .systemFont(ofSize: 12, weight: .medium)
+        $0.font = .pretendardFont(size: 12, weight: .medium)
+        $0.textColor = .black
     }
     var replacePeroid = UILabel().then {
         $0.text = ""
-        $0.font = .systemFont(ofSize: 8, weight: .regular)
+        $0.font = .pretendardFont(size: 8, weight: .regular)
+        $0.textColor = .gray500
     }
 }
 

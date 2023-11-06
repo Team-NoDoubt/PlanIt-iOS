@@ -25,7 +25,7 @@ class TabsFlow: Flow {
 
         let timeTableFlow = TimeTableFlow()
         let changedFlow = ChangedFlow()
-        let etcFlow = ETCFlow()
+        let etcFlow = SeeMoreFlow()
 
         Flows.use(
             timeTableFlow,
@@ -65,7 +65,7 @@ class TabsFlow: Flow {
                 withNextStepper: OneStepper(withSingleStep: AppStep.changedSceneIsRequired)),
             .contribute(
                 withNextPresentable: etcFlow,
-                withNextStepper: OneStepper(withSingleStep: AppStep.etcScreenRequired)
+                withNextStepper: OneStepper(withSingleStep: AppStep.seeMoreScreenIsRequired)
             )
         
         ])

@@ -1,6 +1,6 @@
 import UIKit
 
-class EtcViewController: UIViewController {
+class SeeMoreViewController: UIViewController {
 
     override func viewDidLoad() {
         view.backgroundColor = .systemBackground

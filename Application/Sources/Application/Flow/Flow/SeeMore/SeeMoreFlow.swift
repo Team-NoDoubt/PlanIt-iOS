@@ -3,7 +3,7 @@ import RxFlow
 import RxSwift
 import RxCocoa
 
-class ETCFlow: Flow {
+class SeeMoreFlow: Flow {
 
     private let rootViewController = UINavigationController()
 
@@ -22,18 +22,18 @@ class ETCFlow: Flow {
         guard let step = step as? AppStep else { return .none }
 
         switch step {
-        case .etcScreenRequired:
-            return navigateToEtcScreen()
+        case .seeMoreScreenIsRequired:
+            return navigateToSeeMoreScreen()
         default:
             return .none
         }
     }
 
-    private func navigateToEtcScreen() -> FlowContributors {
-        let etcViewController = EtcViewController()
+    private func navigateToSeeMoreScreen() -> FlowContributors {
+        let etcViewController = SeeMoreViewController()
         self.rootViewController.setViewControllers([etcViewController], animated: false)
 
-        return .one(flowContributor: .contribute(withNextPresentable: etcViewController, withNextStepper: OneStepper(withSingleStep: AppStep.etcScreenRequired)))
+        return .one(flowContributor: .contribute(withNextPresentable: etcViewController, withNextStepper: OneStepper(withSingleStep: AppStep.seeMoreScreenIsRequired)))
     }
 }
 

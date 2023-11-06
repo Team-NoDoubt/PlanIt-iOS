@@ -7,7 +7,8 @@ class TimeTableCollectionViewCell: UICollectionViewCell {
 
     var subject = UILabel().then {
         $0.text = ""
-        $0.font = .systemFont(ofSize: 16, weight: .bold)
+        $0.textColor = .gray700
+        $0.font = .pretendardFont(size: 16, weight: .bold)
     }
 
     override init(frame: CGRect) {

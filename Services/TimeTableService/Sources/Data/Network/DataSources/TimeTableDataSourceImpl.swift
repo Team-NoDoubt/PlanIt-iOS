@@ -2,10 +2,11 @@ import Moya
 import RxSwift
 import RxMoya
 import Foundation
+import BaseModule
 
 class TimeTableDataSourceImpl: TimeTableDataSource {
 
-    private let provider = MoyaProvider<TimeTableAPI>()
+    private let provider = MoyaProvider<TimeTableAPI>(plugins: [MoyaLoggingPlugin()])
 
     func getTimeTable(grade: Int, classNum: Int) -> Single<[TimeTableEntity]> {
         return provider.rx.request(.getTimeTable(grade: grade, classNum: classNum))

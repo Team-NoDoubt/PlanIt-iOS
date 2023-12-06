@@ -10,7 +10,7 @@ class TimeTableRepositoryImpl: TimeTableRepository {
         self.timeTableDataSource = timeTableDataSource
     }
     
-    func getTimeTable(grade: Int, classNum: Int) -> RxSwift.Observable<[TimeTableEntity]> {
+    func getTimeTable(grade: Int, classNum: Int) -> RxSwift.Single<[TimeTableEntity]> {
         timeTableDataSource.getTimeTable(grade: grade, classNum: classNum)
             .map { timeTables in
                 //금요일 시간표 6,7교시 빈 배열 추가
@@ -22,11 +22,9 @@ class TimeTableRepositoryImpl: TimeTableRepository {
                 }
                 return fillTimeTables.sorted(by: { $0.period < $1.period })
             }
-            .asObservable()
     }
-    func getChangedList(grade: Int, classNum: Int) -> RxSwift.Observable<[ChangedEntity]> {
+    func getChangedList(grade: Int, classNum: Int) -> RxSwift.Single<[ChangedEntity]> {
         timeTableDataSource.getChangedList(grade: grade, classNum: classNum)
-            .asObservable()
     }
 }
 

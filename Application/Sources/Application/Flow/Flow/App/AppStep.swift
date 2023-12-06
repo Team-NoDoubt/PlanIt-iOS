@@ -1,6 +1,6 @@
 import RxFlow
 
-enum AppStep: Step {
+public enum AppStep: Step {
     //Global
     case onboardingIsRequired
     case tabIsRequired

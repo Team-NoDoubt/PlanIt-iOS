@@ -8,8 +8,7 @@ class ChangedTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.selectionStyle = .none
-        addView()
-        setLayout()
+        setUp()
     }
 
     let backgroundCellView = UIView().then {
@@ -46,7 +45,7 @@ class ChangedTableViewCell: UITableViewCell {
 }
 
 extension ChangedTableViewCell {
-    func addView() {
+    func setUp() {
         addSubview(backgroundCellView)
         [
             arrowImageView,
@@ -56,8 +55,6 @@ extension ChangedTableViewCell {
             replacePeroid
         ].forEach {backgroundCellView.addSubview($0)}
         
-    }
-    func setLayout() {
         backgroundCellView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(2)
             $0.top.equalToSuperview().inset(3)

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ChangedEntity: Equatable {
+public struct ChangedEntity {
     public let requestSubject: String
     public let requestDate: String
     public let requestPeroid: Int

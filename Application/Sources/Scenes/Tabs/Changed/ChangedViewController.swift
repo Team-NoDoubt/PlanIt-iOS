@@ -24,12 +24,19 @@ class ChangedViewController: UIViewController {
         getChangedList.accept(())
     }
 
+    let refreshControll : UIRefreshControl = UIRefreshControl()
+
     override func viewDidLoad() {
-        view.backgroundColor = .systemBackground
-        changedTableView.delegate = self
+        view.backgroundColor = .white
+        changedTableView.refreshControl = refreshControll
+        refreshControll.addTarget(self, action: #selector(refreshFunction), for: .valueChanged)
         addView()
         setLayout()
         bind()
+    }
+
+    @objc func refreshFunction() {
+        getChangedList.accept(())
     }
     
     private let headerLabel = UILabel().then {
@@ -52,7 +59,9 @@ class ChangedViewController: UIViewController {
             cell.beforePeroid.text = "\(item.requestDate): \(item.requestPeroid)교시"
             cell.replaceSubject.text = "\(item.replacePeriod)교시: \(item.replaceSubject)"
             cell.replacePeroid.text = "\(item.replaceDate): \(item.replacePeriod)교시"
+            cell.setUp()
         }
+        .disposed(by: disposeBag)
     }
 }
 
@@ -75,9 +84,10 @@ extension ChangedViewController {
         }
     }
 }
-extension ChangedViewController: UITableViewDelegate {
-    private func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChangedTableViewCell", for: indexPath) as? ChangedTableViewCell else { return UITableViewCell()}
-        return cell
-    }
-}
+//extension ChangedViewController: UITableViewDelegate {
+//    private func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChangedTableViewCell", for: indexPath) as? ChangedTableViewCell else { return UITableViewCell()}
+//        return cell
+//    }
+//}
+

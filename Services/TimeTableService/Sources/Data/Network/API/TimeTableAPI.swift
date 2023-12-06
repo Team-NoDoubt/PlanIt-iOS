@@ -33,25 +33,17 @@ extension TimeTableAPI: PlanItAPI {
     }
     
     var method: Moya.Method {
-        switch self {
-        case .getTimeTable, .getChangedTimeTable:
-            return .get
-        }
+        return .get
     }
     var task: Task {
         switch self {
-        case .getTimeTable(let grade, let classNum):
+        case .getTimeTable(let grade, let classNum), .getChangedTimeTable(let grade, let classNum):
             return .requestParameters(
                 parameters: [
-                    "grade" : grade,
-                    "class" : classNum
-                ], encoding: URLEncoding.queryString)
-        case .getChangedTimeTable(let grade, let classNum):
-            return .requestParameters(
-                parameters: [
-                    "grade" : grade,
-                    "class" : classNum
-                ], encoding: URLEncoding.queryString)
+                    "grade": grade,
+                    "class": classNum
+                ],
+                encoding: URLEncoding.default)
         }
     }
 }

@@ -9,7 +9,7 @@ public class GetTimeTableListUseCase {
         self.repository = repository
     }
 
-    public func excute(grade: Int, classNum: Int) -> Observable<[TimeTableEntity]> {
+    public func excute(grade: Int, classNum: Int) -> Single<[TimeTableEntity]> {
         return repository.getTimeTable(grade: grade, classNum: classNum)
     }
 }

@@ -25,17 +25,21 @@ public class LoginViewModel: ViewModelType, Stepper {
     }
     func transform(_ input: Input) -> Output {
         let info = Driver.combineLatest(input.idText, input.passwordText)
-        input.loginButtonTap
-            .asObservable()
-            .withLatestFrom(info)
-            .flatMap { id, password in
-                self.loginUseCase.excute(id: id, password: password)
-                    .andThen(Single.just(AppStep.tabIsRequired))
-            }
+//        input.loginButtonTap
+//            .asObservable()
+//            .withLatestFrom(info)
+//            .flatMap { id, password in
+//                self.loginUseCase.excute(id: id, password: password)
+//                    .andThen(Single.just(AppStep.tabIsRequired))
+//            }
+//            .bind(to: steps)
+//            .disposed(by: disposeBag)
+        input.loginButtonTap.asObservable()
+            .map { AppStep.tabIsRequired }
             .bind(to: steps)
             .disposed(by: disposeBag)
 
 
-        return output
+        return Output()
     }
 }

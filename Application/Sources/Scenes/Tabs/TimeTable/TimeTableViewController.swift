@@ -6,7 +6,7 @@ import RxSwift
 import RxCocoa
 import TimeTableService
 
-class TimeTableViewController: UIViewController,ViewController {
+class TimeTableViewController: UIViewController, ViewController {
 
     private let getTimeTable = PublishRelay<Void>()
     private let disposeBag = DisposeBag()

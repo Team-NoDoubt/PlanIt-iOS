@@ -9,7 +9,7 @@ public class GetChangedListUseCase {
         self.repository = repository
     }
 
-    public func excute(grade: Int, classNum: Int) -> Observable<[ChangedEntity]> {
+    public func excute(grade: Int, classNum: Int) -> Single<[ChangedEntity]> {
         return repository.getChangedList(grade: grade, classNum: classNum)
     }
 }

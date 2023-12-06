@@ -2,7 +2,7 @@ import UIKit
 import RxFlow
 import RxSwift
 
-@main
+//@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?

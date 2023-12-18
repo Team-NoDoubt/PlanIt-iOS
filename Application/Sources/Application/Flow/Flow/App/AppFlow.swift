@@ -23,6 +23,8 @@ class AppFlow: Flow {
             return self.navigationToTabScreen()
         case .loginIsRequired:
             return self.navigateToLoginScreen()
+        case .testIsRequired:
+            return self.navigateTestScreen()
         default:
             return .none
         }
@@ -31,8 +33,8 @@ class AppFlow: Flow {
     private func navigationToTabScreen() -> FlowContributors {
         let tabsFlow = TabsFlow()
         
-        Flows.use(tabsFlow, when: .created) { [unowned self] root in
-            self.window.rootViewController = root
+        Flows.use(tabsFlow, when: .created) { [weak self] root in
+            self?.window.rootViewController = root
         }
         return .one(flowContributor: .contribute(
                 withNextPresentable: tabsFlow,
@@ -42,11 +44,21 @@ class AppFlow: Flow {
 
     private func navigateToLoginScreen() -> FlowContributors {
         let loginFlow = LoginFlow()
-        Flows.use(loginFlow, when: .created) { [unowned self] root in
-            self.window.rootViewController = root
+        Flows.use(loginFlow, when: .created) { [weak self] root in
+            self?.window.rootViewController = root
         }
         return .one(flowContributor: .contribute(
             withNextPresentable: loginFlow,
             withNextStepper: OneStepper(withSingleStep: AppStep.loginIsRequired)))
+    }
+
+    private func navigateTestScreen() -> FlowContributors {
+        let testFlow = TestFlow()
+        Flows.use(testFlow, when: .created) { [weak self] root in
+            self?.window.rootViewController = root
+        }
+        return .one(flowContributor: .contribute(
+            withNextPresentable: testFlow,
+            withNextStepper: OneStepper(withSingleStep: AppStep.testIsRequired)))
     }
 }

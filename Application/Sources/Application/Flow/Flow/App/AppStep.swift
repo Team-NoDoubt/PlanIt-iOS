@@ -14,7 +14,10 @@ public enum AppStep: Step {
     //Changed
     case changedSceneIsRequired
 
-    //ETC
+    //SeeMore
     case seeMoreScreenIsRequired
+    case bugReportIsRequired
+
+    case testIsRequired
 
 }
